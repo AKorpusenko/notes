@@ -26,12 +26,15 @@ Also: [bitshares_doc](http://docs.bitshares.org/tutorials/construct-transaction.
 - `remove_builder_transaction`
 - `approve_proposal`
 - `get_proposed_transactions`
+
 ### Краткое описание процесса создания транзакции с помощью конструктора ###
 
 1. Create an instance of the transaction builder
 2. Add arbitrary operation types
 3. Add the required amount of fees
 4. Sign and broadcast your transaction
+
+### ###
 
 1. Создать instance конструктора транзакций. (просто вызвать метод begin_builder_transaction, который возвращает уникальный handle)
 2. Добавить транзакции произвольных типов

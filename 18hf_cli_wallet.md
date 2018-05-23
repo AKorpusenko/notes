@@ -244,7 +244,7 @@ annotated_signed_transaction create_account_with_keys(
 [Pull request](https://github.com/GolosChain/golos/pull/658)
 
 
-14. API Added method `create_account_delegated` to `cli_wallet`. 
+15. API Added method `create_account_delegated` to `cli_wallet`. 
 ```
 /**
  *  This method will genrate new owner, active, posting and memo keys for the new account which

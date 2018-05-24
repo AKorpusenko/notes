@@ -207,7 +207,7 @@ signed_transaction approve_proposal(
 ```
 [Pull request](https://github.com/GolosChain/golos/pull/597)
 
-14. API Add the parameter `fee` to `create_account_with_keys`. 
+13. API Add the parameter `fee` to `create_account_with_keys`. 
 Now current signature of this method looks this way:
 ```
 annotated_signed_transaction create_account_with_keys(
@@ -225,7 +225,7 @@ annotated_signed_transaction create_account_with_keys(
 [Pull request](https://github.com/GolosChain/golos/pull/658)
 
 
-15. API Added method `create_account_delegated` to `cli_wallet`. 
+14. API Added method `create_account_delegated` to `cli_wallet`. 
 ```
 /**
  *  This method will genrate new owner, active, posting and memo keys for the new account which
@@ -249,8 +249,10 @@ annotated_signed_transaction create_account_delegated(
 [Pull request](https://github.com/GolosChain/golos/pull/658)
 
 
+## МЕЛОЧЬ ##
+
 - Изменился возвращаемый результат `get_ops_in_block`
-Было:
+- Было:
 `vector<operation_api_object> get_ops_in_block( uint32_t <blockquote></blockquote>_num, bool only_virtual = true );`
-Стало:
+- Стало:
 `vector<golos::plugins::operation_history::applied_operation> get_ops_in_block( uint32_t block_num, bool only_virtual = true );`

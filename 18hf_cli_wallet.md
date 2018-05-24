@@ -35,13 +35,17 @@ Also: [bitshares_doc](http://docs.bitshares.org/tutorials/construct-transaction.
 - `remove_builder_transaction`
 - `approve_proposal`
 - `get_proposed_transactions`
-### Краткое описание процесса создания транзакции с помощью конструктора ###
+(Ниже идёт краткое описание каждого метода)
+
+
+### Краткое описание процесса создания транзакции с помощью конструктора  ENG ###
 
 1. Create an instance of the transaction builder
 2. Add arbitrary operation types
 3. Add the required amount of fees
 4. Sign and broadcast your transaction
 
+### Краткое описание процесса создания транзакции с помощью конструктора  RUS ###
 1. Создать instance конструктора транзакций. (просто вызвать метод begin_builder_transaction, 
 который возвращает уникальный handle)
 2. Добавить транзакции произвольных типов
@@ -182,29 +186,6 @@ void remove_builder_transaction(transaction_handle_type handle);
 
 
 12. Added method `approve_proposal` to `cli_wallet`.
-Валидирует и подписывает proposal транзакцию
-```
-/**
- * Approve or disapprove a proposal.
- *
- * @param author The author of the proposal
- * @param title The proposal to modify.
- * @param delta Members contain approvals to create or remove.  In JSON you can leave empty members undefined.
- * @param broadcast true if you wish to broadcast the transaction
- * @return the signed version of the transaction
- */
-signed_transaction approve_proposal(
-    const std::string& author,
-    const std::string& title,
-    const approval_delta& delta,
-    bool broadcast /* = false */
-);
-
-```
-[Pull request](https://github.com/GolosChain/golos/pull/597)
-
-
-13. Added method `approve_proposal` to `cli_wallet`.
 Валидирует и подписывает proposal транзакцию
 ```
 /**

@@ -9,6 +9,15 @@ cli_wallet is a console wallet, which provides tools to work with GOLOS blockcha
 5. Now unlock the wallet with command `unlock <your_password>`
 6. Work with wallet.
 
+
+## What's next? ##
+TODO Можно привести кучу примеров из репозитория [Qa](https://github.com/GolosChain/Qa/tree/master/TestCase)
+
+## Non-interactive режим ##
+TODO написать про то, что можно писать скрипты, потому что ключ --comands="" позволяет последовтельно
+исполнять команды в неинтерактивном режиме
+
+
 # Methods description #
 
 - `about` 
@@ -23,7 +32,7 @@ variant_object                      about() const;
 Execution example:
 
 ```
-about 
+>>> about 
 {
   "client_version": "v0.17.2-188-geb6bc299",
   "steem_revision": "eb6bc2993b28e31b751c24c77e5081997e85dc8e",
@@ -91,9 +100,217 @@ begin_builder_transaction
 ```
 
 - `cancel_order`
+```
+/**
+ * Cancel an order created with create_order
+ *
+ * @param owner The name of the account owning the order to cancel_order
+ * @param orderid The unique identifier assigned to the order by its creator
+ * @param broadcast true if you wish to broadcast the transaction
+ */
+annotated_signed_transaction cancel_order(string owner, uint32_t orderid, bool broadcast);
+```
+#TODO добавить пример запуска 
+
+- `cancel_transfer_from_savings`
+
+- `change_recovery_account`
+
+- `convert_sbd`
+
+- `create_account`
+This method will generate new owner, active, posting and memo keys for the new account
+which will be controlable by this wallet.
+Аргументы: имя_акк_создателя, имя_нового_аккаунта, json_meta 
+
+- `create_account_delegated`
+
+- `create_account_with_keys`
+
+- `create_account_with_keys_delegated`
+
+- `create_order`
+
+- `database_info`
+
+- `decline_voting_rights`
+
+- `decrypt_memo`
+
+- `delegate_vesting_shares`
+
+- `escrow_approve`
+
+- `escrow_dispute`
+
+- `escrow_release`
+
+- `escrow_transfer`
+
+- `get_account`
+По имени аккаунта возвращает всю информацию по этому аккаунту
+Пример запуска:
+```
+>>> get_account cyberfounder
+
+{
+  "id": 3,
+  "name": "cyberfounder",
+  "owner": {
+    "weight_threshold": 1,
+    "account_auths": [],
+    "key_auths": [[
+        "GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6",
+        1
+      ]
+    ]
+  },
+  "active": {
+    "weight_threshold": 1,
+    "account_auths": [],
+    "key_auths": [[
+        "GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6",
+        1
+      ]
+    ]
+  },
+  "posting": {
+    "weight_threshold": 1,
+    "account_auths": [],
+    "key_auths": [[
+        "GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6",
+        1
+      ]
+    ]
+  },
+  "memo_key": "GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6",
+  "json_metadata": "",
+  "proxy": "",
+  "last_owner_update": "1970-01-01T00:00:00",
+  "last_account_update": "1970-01-01T00:00:00",
+  "created": "1970-01-01T00:00:00",
+  "mined": true,
+  "owner_challenged": false,
+  "active_challenged": false,
+  "last_owner_proved": "1970-01-01T00:00:00",
+  "last_active_proved": "1970-01-01T00:00:00",
+  "recovery_account": "",
+  "last_account_recovery": "1970-01-01T00:00:00",
+  "reset_account": "null",
+  "comment_count": 0,
+  "lifetime_vote_count": 0,
+  "post_count": 0,
+  "can_vote": true,
+  "voting_power": 10000,
+  "last_vote_time": "1970-01-01T00:00:00",
+  "balance": "43305009.000 GOLOS",
+  "savings_balance": "0.000 GOLOS",
+  "sbd_balance": "0.000 GBG",
+  "sbd_seconds": "0",
+  "sbd_seconds_last_update": "1970-01-01T00:00:00",
+  "sbd_last_interest_payment": "1970-01-01T00:00:00",
+  "savings_sbd_balance": "0.000 GBG",
+  "savings_sbd_seconds": "0",
+  "savings_sbd_seconds_last_update": "1970-01-01T00:00:00",
+  "savings_sbd_last_interest_payment": "1970-01-01T00:00:00",
+  "savings_withdraw_requests": 0,
+  "vesting_shares": "2455935.529482 GESTS",
+  "delegated_vesting_shares": "0.000000 GESTS",
+  "received_vesting_shares": "0.000000 GESTS",
+  "vesting_withdraw_rate": "0.000001 GESTS",
+  "next_vesting_withdrawal": "1969-12-31T23:59:59",
+  "withdrawn": 0,
+  "to_withdraw": 0,
+  "withdraw_routes": 0,
+  "curation_rewards": 0,
+  "posting_rewards": 0,
+  "proxied_vsf_votes": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "witnesses_voted_for": 0,
+  "average_bandwidth": 148070876,
+  "lifetime_bandwidth": 2512000000,
+  "last_bandwidth_update": "2018-05-17T06:59:57",
+  "average_market_bandwidth": 113999960,
+  "last_market_bandwidth_update": "2018-05-17T06:59:57",
+  "last_post": "1970-01-01T00:00:00",
+  "last_root_post": "1970-01-01T00:00:00",
+  "post_bandwidth": 10000,
+  "new_average_bandwidth": 2510708380,
+  "new_average_market_bandwidth": 3399615482,
+  "witness_votes": []
+}
+```
+
+- `get_account_history`
+
+- `get_active_witnesses`
+
+- `get_block`
+
+- `get_conversion_requests`
+
+- `get_encrypted_memo`
+
+- `get_feed_history`
+
+- `get_inbox`
+
+- `get_miner_queue`
+
+- `get_open_orders`
+
+- `get_ops_in_block`
+
+- `get_order_book`
+
+- `get_outbox`
+
+- `get_owner_history`
+
+- `get_private_key`
+
+- `get_private_key_from_password`
+
+- `get_proposed_transactions`
+
+- `get_prototype_operation`
+
+- `get_transaction`
+
+- `get_withdraw_routes`
+
+- `get_witness`
+
+- `gethelp`
+
+- `help`
+
+- `import_key`
+Импортирует приватный ключ, чтобы дать возможность проводить транзкации.
+Пример:
+`>>> import_key <your_private_key>`
+Например в тестнете это можно вытащить при запуске golosd. См initminer private key
+```
+------------------------------------------------------
+
+            STARTING TEST NETWORK
+
+------------------------------------------------------
+initminer public key: xxx
+initminer private key: xxx
+chain id: xxx
+blockchain version: 0.18.0
+------------------------------------------------------
+```
+
 
 
 # List of all cli_wallet commands returned by `help()` command #
+
 
 N2fc14static_variantIJNS_14variant_objectEEEE about()
 char                                     add_operation_copy_to_builder_transaction(uint16_t, uint16_t, uint32_t)

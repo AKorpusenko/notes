@@ -144,7 +144,7 @@ transaction preview_builder_transaction(transaction_handle_type handle);
 
 
 9. API Added method `sign_builder_transaction` to `cli_wallet`.
-Подписывает транзакцию.
+Подписывает все транзакции в builder_transaction.
 ```
 signed_transaction sign_builder_transaction(transaction_handle_type handle, bool broadcast = true);
 
@@ -153,14 +153,14 @@ signed_transaction sign_builder_transaction(transaction_handle_type handle, bool
 
 
 10. API Added method `propose_builder_transaction` to `cli_wallet`.
-Создаёт proposal транзакцию. 
+Создаёт конструктор для proposal транзакций. 
 Аргументы: 
 	- handle от обычного `builder_transaction`
 	- автор proposal транзакции
 	- название
 	- memo data
 	- время, когда транзакция протухнет, если не будет одобрена
-	- время на подпис
+	- время на подпись
 
 ```
 signed_transaction propose_builder_transaction(

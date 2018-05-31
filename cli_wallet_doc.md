@@ -12,12 +12,15 @@ cli_wallet is a console wallet, which provides tools to work with GOLOS blockcha
 
 ## What's next? ##
 TODO Можно привести кучу примеров из репозитория [Qa](https://github.com/GolosChain/Qa/tree/master/TestCase)
-[Proposal тесты](https://github.com/GolosChain/Qa/blob/master/TestCase/ProposalTransactions/633-cli_wallet.md), которые хорошо подходят для объяснения как пользоваться proposal:
+[Proposal тесты](https://github.com/GolosChain/Qa/blob/master/TestCase/ProposalTransactions/633-cli_wallet.md), которые хорошо подходят для объяснения как пользоваться proposal.
+[Optional Reputation](https://github.com/GolosChain/Qa/blob/master/TestCase/674-OptionalReputationField.md) --  как получать GBG.
 
 ## Non-interactive режим ##
-TODO написать про то, что можно писать скрипты, потому что ключ --comands="" позволяет последовтельно
-исполнять команды в неинтерактивном режиме
-
+Cli_wallet предоставляет возможность при помощи ключа `--commands` можно передать последовательный список команд через `&&`. Например:
+```
+./cli_wallet --server-rpc-endpoint="ws://127.0.0.1:8091" --commands="unlock 1 && create_account cyberfounder ginger \"{}\" \"10.000 GOLOS\" true && list_my_accounts"
+```
+Таким образом, на данный момент это единственный способ писать полноценные скрипты для работы с cli_wallet. 
 
 # Methods description #
 
@@ -82,7 +85,10 @@ void add_operation_copy_to_builder_transaction(
 operation get_prototype_operation(string operation_type);
 
 ```
-#TODO добавить пример запуска 
+Пример:
+```
+get_prototype_operation account_metadata_operation
+```
 
 - `approve_proposal`
 Валидирует и подписывает proposal транзакцию
@@ -103,6 +109,9 @@ signed_transaction approve_proposal(
     bool broadcast /* = false */
 );
 
+```
+```
+approve_proposal alice test {"active_approvals_to_add":["alice"]} true
 ```
 
 - `begin_builder_transaction`
@@ -174,7 +183,11 @@ annotated_signed_transaction convert_sbd( string from, asset amount, bool broadc
 - `create_account`
 This method will generate new owner, active, posting and memo keys for the new account
 which will be controlable by this wallet.
-Аргументы: имя_акк_создателя, имя_нового_аккаунта, json_meta 
+Аргументы: имя_акк_создателя, имя_нового_аккаунта, json_meta, fee (в формате asset'а), true\false (broadcast or not)
+```
+create_account cyberfounder alice "{}" "3.000 GOLOS" true
+```
+
 
 - `create_account_delegated`
 ```
@@ -195,6 +208,10 @@ which will be controlable by this wallet.
  */
 annotated_signed_transaction create_account_delegated(
     string creator, asset steem_fee, asset delegated_vests, string new_account_name, string json_meta, bool broadcast);
+```
+Пример:
+```
+create_account_delegated cyberfounder "3.000 GOLOS" "0.100000 GESTS" jim "{}" true
 ```
 
 - `create_account_with_keys`
@@ -308,6 +325,10 @@ string decrypt_memo( string memo );
 annotated_signed_transaction delegate_vesting_shares(string delegator, string delegatee, asset vesting_shares, bool broadcast);
 ```
 
+```
+delegate_vesting_shares alice bob "1026635.005622 GESTS" true
+```
+
 - `escrow_approve`
 ```
 /**
@@ -383,6 +404,10 @@ annotated_signed_transaction escrow_release(
         bool broadcast = false
 );
 ```
+Пример:
+```
+escrow_release cyberfounder bob smith cyberfounder bob 11 "1.000 GBG" "10.000 GOLOS" true
+```
 
 - `escrow_transfer`
 
@@ -415,6 +440,10 @@ annotated_signed_transaction escrow_transfer(
         string json_meta,
         bool broadcast = false
 );
+```
+Пример:
+```
+escrow_transfer cyberfounder bob smith 11 "1.000 GBG" "10.020 GOLOS" "10.000 GOLOS" "2018-05-31T10:40:59" "2018-05-31T11:00:00" "{}" true
 ```
 
 - `get_account`
@@ -657,6 +686,10 @@ pair<public_key_type,string>  get_private_key_from_password( string account, str
      std::string account, uint32_t from, uint32_t limit
 );
 ```
+Пример:
+```
+get_proposed_transactions alice 0 10
+```
 
 - `get_prototype_operation`
 Чтобы создать операцию (с помощью add_operation_to_builder_transaction) в данный момент,
@@ -681,6 +714,10 @@ pair<public_key_type,string>  get_private_key_from_password( string account, str
  */
 operation get_prototype_operation(string operation_type);
 
+```
+Пример:
+```
+add_operation_to_builder_transaction 0 ["account_metadata_operation", {"account":"profile", "json_metadata":"{\"name\":\"builder\"}"}]
 ```
 
 - `get_transaction`
@@ -917,6 +954,10 @@ post_comment bob "re-test" alice test "comment title" "comment body" "{}" true
 transaction preview_builder_transaction(transaction_handle_type handle);
 
 ```
+Пример:
+```
+preview_builder_transaction 0
+```
 
 - `propose_builder_transaction`
 Создаёт конструктор для proposal транзакций. 
@@ -938,6 +979,11 @@ signed_transaction propose_builder_transaction(
     time_point_sec review_period_time = time_point::min(),
     bool broadcast = true
 );
+```
+Пример:
+```
+propose_builder_transaction 0 alice test "memo" "2018-05-22T22:15:00" "1970-01-01T00:00:00" true
+
 ```
 
 - `publish_feed`
@@ -1085,6 +1131,10 @@ annotated_signed_transaction set_withdraw_vesting_route( string from, string to,
 signed_transaction sign_builder_transaction(transaction_handle_type handle, bool broadcast = true);
 
 ```
+Пример:
+```
+sign_builder_transaction 0 true
+```
 
 - `sign_transaction`
 ```
@@ -1125,6 +1175,10 @@ brain_key_info suggest_brain_key()const;
  */
 annotated_signed_transaction transfer(string from, string to, asset amount, string memo, bool broadcast = false);
 ```
+Пример:
+```
+transfer cyberfounder alice "3000.000 GOLOS" true
+```
 
 - `transfer_from_savings`
 ```
@@ -1163,7 +1217,7 @@ annotated_signed_transaction transfer_to_vesting(string from, string to, asset a
 ```
 Пример:
 ```
-transfer_to_vesting cyberfounder bob "500.000 GOLOS" true
+transfer_to_vesting cyberfounder bob "500.000 GESTS" true
 ```
 
 - `unlock`
@@ -1271,6 +1325,10 @@ annotated_signed_transaction update_account_memo_key( string account_name, publi
  */
 annotated_signed_transaction update_account_meta(string account_name, string json_meta, bool broadcast);
 ```
+Пример:
+```
+update_account_meta profile "{\"name\":\"update\"}" true
+```
 
 - `update_witness`
 ```
@@ -1289,6 +1347,11 @@ annotated_signed_transaction update_witness(string witness_name,
                                             const chain_properties& props,
                                             bool broadcast = false);
 ```
+Пример:
+```
+update_witness cyberfounder "http://url" GLS58g5rWYS3XFTuGDSxLVwiBiPLoAyCZgn6aB9Ueh8Hj5qwQA3r6 {"account_creation_fee": "1.000 GOLOS"} true
+```
+
 
 
 - `vote`
@@ -1303,6 +1366,10 @@ annotated_signed_transaction update_witness(string witness_name,
  * @param broadcast true if you wish to broadcast the transaction
  */
 annotated_signed_transaction vote( string voter, string author, string permlink, int16_t weight, bool broadcast );
+```
+Пример:
+```
+vote cyberfounder cyberfounder plink 100 true
 ```
 
 - `vote_for_witness`
@@ -1322,6 +1389,10 @@ annotated_signed_transaction vote_for_witness(string account_to_vote_with,
                                               string witness_to_vote_for,
                                               bool approve = true,
                                               bool broadcast = false);
+```
+Пример:
+```
+vote_for_witness alice cyberfounder true true
 ```
 
 - `withdraw_vesting`

@@ -1,5 +1,5 @@
 # Description #
-    cli_wallet is a console wallet, which provides tools to work with GOLOS blockchain (Not API calls)
+    cli_wallet is the console wallet, which provides tools to work with GOLOS blockchain
 
 ## How to start work with cli_wallet ##
     1. First of all you need `golosd` to be running
